@@ -1,0 +1,298 @@
+:root {
+      --bg: #0f1115;
+      --panel: #302f5688;
+      --text: #ffe6ae;
+      --primary: #c33650;
+      --ok: #33d69f;
+      --joker: #000;
+      --btn: #302f56;
+      --btn-hover: #2a3140;
+    }
+    * { box-sizing: border-box; }
+    html, body { 
+      height: 100%; 
+      overflow: hidden;
+    }
+    body {
+      margin: 0;
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
+      background: radial-gradient(1200px 600px at 50% -10%, #1d2230 0%, var(--bg) 55%);
+      color: var(--text);
+      display: grid;
+      place-items: start center;
+      padding: 24px 16px 48px;
+    }
+
+    .app {
+      width: min(100%, 600px);
+    }
+
+    h1.title {
+      text-align: center;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 0 0 18px;
+      font-family: "Saira Extra Condensed", sans-serif;
+      font-weight: 800;
+      font-style: normal;
+      font-size: clamp(44px, 6vw, 50px);
+      text-shadow: 0 2px 24px rgba(77,163,255,0.25);
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      background-image: url('Bingocard_BG.png');
+      background-size: cover;   /* skaliert das Bild so, dass es das Feld komplett ausfüllt */
+      background-position: center; /* zentriert das Bild im Feld */
+      background-repeat: no-repeat; /* verhindert Kacheln */
+      border-radius: 18px;
+      padding: 50px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .cell {
+      position: relative;
+      border-radius: 12px;
+      overflow: clip;
+      background: var(--panel);
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease, background 200ms ease;
+      aspect-ratio: 1 / 1; /* quadratisch */
+      display: grid;
+      place-items: center;
+      user-select: none;
+    }
+    .cell:hover { transform: translateY(-1px); }
+
+    .cell input[type="number"] {
+      width: 100%; height: 100%;
+      background: transparent; color: var(--text);
+      border: none; outline: none;
+      text-align: center;
+      font-size: clamp(16px, 3.5vw, 28px);
+      font-weight: 700;
+      appearance: textfield;
+      padding: 0;
+    }
+    .cell input[type=number]::-webkit-outer-spin-button,
+    .cell input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+    .cell.dup, .cell.outofrange { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255,93,93,0.35) inset; }
+
+    .cell.marked { box-shadow: 0 0 0 3px var(--primary) inset; border-color: var(--primary); }
+
+    .cell.joker { 
+      background: transparent;
+      background-image: url('Bingocard_Joker.png');
+      background-size: cover;   /* skaliert das Bild so, dass es das Feld komplett ausfüllt */
+      background-position: center; /* zentriert das Bild im Feld */
+      background-repeat: no-repeat; /* verhindert Kacheln */
+    }
+
+    .cell.bingo { background: var(--primary) !important; color: #fff; }
+
+    .toggle {
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      justify-content: center;
+      font-weight: 600; 
+      color: var(--text);
+      justify-self: start;
+    }
+
+    .switch { position: relative; width: 60px; height: 34px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; inset: 0;
+      background: var(--btn);
+      border-radius: 999px;
+      transition: background 120ms ease, border-color 120ms ease;
+    }
+    .slider:before {
+      content: ""; position: absolute; height: 26px; width: 26px; left: 4px; top: 3px;
+      background: var(--text); border-radius: 50%; transition: transform 120ms ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .switch input:checked + .slider { background: var(--primary); }
+    .switch input:checked + .slider:before { transform: translateX(26px); }
+
+    .buttons { 
+      margin-top: 40px;
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr; 
+      gap: 10px; 
+    }
+
+    button {
+      background: var(--btn);
+      color: var(--text);
+      font-weight: 700;
+      border-radius: 12px; padding: 14px 16px; font-size: 16px;
+      transition: background 120ms ease, transform 60ms ease;
+      cursor: pointer;
+    }
+    button:hover { background: var(--btn-hover); }
+    button:active { transform: translateY(1px); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .hint { 
+      text-align: center; 
+      color: var(--text);   
+      font-size: clamp(16px, 3.5vw, 16px);
+      margin-top: 6px; 
+      white-space: pre-line; }
+
+    .bingo-message {
+      color: var(--ok);
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* Einmaliger Glow-Effekt für Bingo-Meldung */
+    @keyframes bingo-glow {
+      0% { text-shadow: 0 0 5px #fff, 0 0 10px #ff0, 0 0 20px #f0f; }
+      50% { text-shadow: 0 0 20px #0ff, 0 0 30px #ff0, 0 0 40px #f0f; }
+      100% { text-shadow: none; }
+    }
+
+    .bingo-animate {
+      animation: bingo-glow 1.5s ease-in-out 1;
+    }
+
+    @keyframes firework {
+      0% { 
+        transform: translate(-50%, 60vh);
+        width: 0.5vmin;
+        opacity: 1;
+      }
+      50% { 
+        width: 0.5vmin;
+        opacity: 1;
+      }
+      100% { 
+        width: 45vmin; 
+        opacity: 0; 
+      }
+    }
+
+    .firework,
+    .firework::before,
+    .firework::after {
+      --top: 20vh;
+      content: "";
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0.5vmin;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background:
+        radial-gradient(circle, #ff0 0.2vmin, #0000 0) 50% 00%,
+        radial-gradient(circle, #ff0 0.3vmin, #0000 0) 00% 50%,
+        radial-gradient(circle, #ff0 0.5vmin, #0000 0) 50% 99%,
+        radial-gradient(circle, #ff0 0.2vmin, #0000 0) 99% 50%,
+        radial-gradient(circle, #ff0 0.3vmin, #0000 0) 80% 90%,
+        radial-gradient(circle, #ff0 0.5vmin, #0000 0) 95% 90%,
+        radial-gradient(circle, #ff0 0.5vmin, #0000 0) 10% 60%,
+        radial-gradient(circle, #ff0 0.2vmin, #0000 0) 31% 80%,
+        radial-gradient(circle, #ff0 0.3vmin, #0000 0) 80% 10%,
+        radial-gradient(circle, #ff0 0.2vmin, #0000 0) 90% 23%,
+        radial-gradient(circle, #ff0 0.3vmin, #0000 0) 45% 20%,
+        radial-gradient(circle, #ff0 0.5vmin, #0000 0) 13% 24%;
+      background-size: 0.5vmin 0.5vmin;
+      background-repeat: no-repeat;
+      display: none; /* hidden by default */
+    }
+
+    /* only animate when .active is applied */
+    .firework.active,
+    .firework.active::before,
+    .firework.active::after {
+      display: block;
+      animation: firework 2s ease-out forwards;
+    }
+
+    .firework::before {
+      transform: translate(-40%, -40%) rotate(25deg) !important; 
+    }
+
+    .firework::after {
+      transform: translate(-30%, -20%) rotate(-37deg) !important; 
+    }
+
+    .started .grid input[readonly] {
+        cursor: pointer;
+    }
+
+    #toast {
+        visibility: hidden;
+        min-width: 200px;
+        background-color: rgba(0,0,0,0.8);
+        color: #fff;
+        text-align: center;
+        border-radius: 8px;
+        padding: 12px 20px;
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1rem;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    #toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px; /* small slide-up effect */
+    }
+
+    .montserrat-vhez-font {
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 40px;
+        background-image: url('Bingocard_BG.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* makes it stay fullscreen */
+      }
+
+      /* optional: remove background from .card so it doesn't double */
+      .card {
+        background: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .grid {
+        gap: 10px;
+      }
+
+      #button-area {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        padding: 1rem;
+        background: rgba(0,0,0,0.5); /* optional dark bar for contrast */
+      }
+    }
