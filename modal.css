@@ -1,0 +1,43 @@
+@import colors.css
+
+.modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  gap: 8px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: var(--btn);
+  color: var(--text);
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+.modal-buttons button:hover {
+  background: var(--btn-hover);
+}
