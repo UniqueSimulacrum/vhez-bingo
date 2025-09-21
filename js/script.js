@@ -220,13 +220,13 @@ const MAX_NUMBER = 66;
     }
 
     fillBtn.addEventListener('click', () => { if (!started) randomFill(); });
+    // Hook into restart button
     startBtn.addEventListener('click', () => {
       if (!started) {
         startGame();
       } else {
-        // Show dialog
-        const reuse = window.confirm("Soll das Board mit den gleichen Zahlen neu gestartet werden?\n\nOK = Behalten\nAbbrechen = Leeren");
-        resetGame(reuse); 
+        // show custom modal
+        document.getElementById("restartModal").style.display = "flex";
       }
     });
 
