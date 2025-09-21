@@ -10,16 +10,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Saira+Extra+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
+<div id="restartModal" class="modal">
+  <div class="modal-content">
+    <h2>Neustart</h2>
+    <p>Möchtest du das Spielfeld leeren oder die Zahlen behalten?</p>
+    <div class="modal-buttons">
+      <button id="keepBtn">Zahlen behalten</button>
+      <button id="clearBtn">Alles leeren</button>
+      <button id="cancelBtn">Abbrechen</button>
+    </div>
+  </div>
+</div>
 <body>
   <div class="app">
-
     <div class="card">
       <h1 id="title" class="title"></h1>
       <div id="grid" class="grid" aria-label="5x5 Bingo Feld"></div>
-
       <div class="controls">
-        
-
         <div class="buttons">
           <label class="toggle" title="Mitte als Jokerfeld verwenden">
             <span>Joker</span>
