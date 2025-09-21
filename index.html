@@ -180,10 +180,12 @@
       document.body.classList.add("started");
     }
 
-    function resetGame() {
+    function resetGame(keepNumbers = false) {
       started = false;
       cells.forEach((c, i) => {
-        c.input.value = '';
+        if (!keepNumbers) {
+          c.input.value = '';
+        }
         c.input.readOnly = false;
         c.wrapper.classList.remove('marked', 'bingo', 'dup', 'outofrange');
       });
@@ -191,7 +193,9 @@
       startBtn.textContent = 'Start';
       startBtn.disabled = true;
       statusEl.textContent = '';
-      statusEl.classList.remove('bingo-message','bingo-animate'); // Bingo-Styles zurücksetzen
+      statusEl.classList.remove('bingo-message','bingo-animate');
+      
+      rewardedBingos.clear(); // 🔥 allow new bingos & fireworks again
       applyJokerState();
       validateAll();
     }
@@ -254,8 +258,13 @@
 
     fillBtn.addEventListener('click', () => { if (!started) randomFill(); });
     startBtn.addEventListener('click', () => {
-      if (!started) startGame();
-      else resetGame();
+      if (!started) {
+        startGame();
+      } else {
+        // Show dialog
+        const reuse = window.confirm("Soll das Board mit den gleichen Zahlen neu gestartet werden?\n\nOK = Behalten\nAbbrechen = Leeren");
+        resetGame(reuse); 
+      }
     });
 
     function triggerFirework() {
