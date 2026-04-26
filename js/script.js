@@ -6,7 +6,7 @@ const MAX_NUMBER = 66;
     const TITLE = "BULLSHIT BINGO"
     
     const gridEl = document.getElementById('grid');
-    const jokerToggle = document.getElementById('jokerToggle');
+    const lockToggle = document.getElementById('lockToggle');
     const fillBtn = document.getElementById('fillBtn');
     const startBtn = document.getElementById('startBtn');
     const statusEl = document.getElementById('status');
@@ -46,30 +46,21 @@ const MAX_NUMBER = 66;
       return { wrapper, input };
     }
 
-    function applyJokerState() {
-      const on = jokerToggle.checked;
-      const mid = cells[MID];
-      if (on) {
-        mid.input.value = '';
-        mid.input.readOnly = true;
-        mid.wrapper.classList.add('joker');
-      } else {
-        if (!started) mid.input.readOnly = false;
-        mid.wrapper.classList.remove('joker');
-      }
-      validateAll();
-    }
+    lockToggle.addEventListener("change", () => {
+      if (!started) return;
 
-    jokerToggle.addEventListener('change', applyJokerState);
+      if (!lockToggle.checked) {
+        showToast("Board entsperrt. Neustart möglich.");
+      } else {
+        showToast("Board gesperrt.");
+      }
+    });
 
     function randomFill() {
       const pool = Array.from({length: MAX_NUMBER}, (_, i) => i+1);
       shuffle(pool);
-      let ptr = 0;
       for (let i = 0; i < cells.length; i++) {
-        if (jokerToggle.checked && i === MID) continue;
-        const c = cells[i];
-        c.input.value = pool[ptr++];
+        cells[i].input.value = pool[i];
       }
       validateAll();
     }
@@ -78,19 +69,18 @@ const MAX_NUMBER = 66;
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
+        console.log("set cell " + i + " to " + arr[i]);
       }
     }
 
     function validateAll() {
       const map = new Map();
-      const consider = (i) => !(jokerToggle.checked && i === MID);
 
       let hasOutOfRange = false;
 
       for (let i = 0; i < cells.length; i++) {
         const value = cells[i].input.value.trim();
         cells[i].wrapper.classList.remove('dup', 'outofrange');
-        if (!consider(i)) continue;
         if (value !== '') {
           const num = parseInt(value);
           if (isNaN(num) || num < 1 || num > MAX_NUMBER) {
@@ -111,7 +101,6 @@ const MAX_NUMBER = 66;
 
       let complete = true;
       for (let i = 0; i < cells.length; i++) {
-        if (!consider(i)) continue;
         if (cells[i].input.value.trim() === '') { complete = false; break; }
       }
 
@@ -128,38 +117,40 @@ const MAX_NUMBER = 66;
     }
 
     function startGame() {
+      // enforce locked state
+      lockToggle.checked = true;
+      lockToggle.disabled = false;
+
       started = true;
       for (let i = 0; i < cells.length; i++) {
-        if (jokerToggle.checked && i === MID) {
-        } else {
-          cells[i].input.readOnly = true;
-        }
+        cells[i].input.readOnly = true;
       }
       statusEl.textContent = 'Spiel läuft: Klicke Felder zum Markieren.';
       startBtn.textContent = 'Neustart';
       startBtn.disabled = false;
-      jokerToggle.disabled = true;
       gridEl.addEventListener('click', onCellClick);
       document.body.classList.add("started");
     }
 
     function resetGame(keepNumbers = false) {
       started = false;
-      cells.forEach((c, i) => {
-        if (!keepNumbers) {
-          c.input.value = '';
-        }
+
+      cells.forEach(c => {
+        if (!keepNumbers) c.input.value = '';
         c.input.readOnly = false;
         c.wrapper.classList.remove('marked', 'bingo', 'dup', 'outofrange');
       });
-      jokerToggle.disabled = false;
+
+      rewardedBingos.clear();
+
+      lockToggle.checked = false;   // reset to locked
+      lockToggle.disabled = false;
+
       startBtn.textContent = 'Start';
       startBtn.disabled = true;
+
       statusEl.textContent = '';
       statusEl.classList.remove('bingo-message','bingo-animate');
-      
-      rewardedBingos.clear(); // 🔥 allow new bingos & fireworks again
-      applyJokerState();
       validateAll();
     }
 
@@ -193,7 +184,7 @@ const MAX_NUMBER = 66;
 
       for (const { id, idxs } of lines) {
         const isComplete = idxs.every(idx =>
-          cells[idx].wrapper.classList.contains('marked') || (jokerToggle.checked && idx === MID)
+          cells[idx].wrapper.classList.contains('marked')
         );
 
         if (isComplete) {
@@ -204,9 +195,9 @@ const MAX_NUMBER = 66;
           if (!rewardedBingos.has(id)) {
             rewardedBingos.add(id);
 
-            const values = idxs.map(idx =>
-              cells[idx].input.value || (idx === MID ? 'Joker' : '')
-            ).join(', ');
+            const values = idxs
+              .map(idx =>cells[idx].input.value)
+              .join(', ');
 
             newBingos.push(`Bingo! Linie: ${values}`);
           }
@@ -219,16 +210,21 @@ const MAX_NUMBER = 66;
       }
     }
 
-    fillBtn.addEventListener('click', () => { if (!started) randomFill(); });
-    // Hook into restart button
     startBtn.addEventListener('click', () => {
       if (!started) {
         startGame();
       } else {
-        // show custom modal
+        if (lockToggle.checked) {
+          showToast("Board ist gesperrt. Zum Neustarten entsperren.");
+          return;
+        }
+
+        // your existing modal logic
         document.getElementById("restartModal").style.display = "flex";
       }
     });
+
+    fillBtn.addEventListener('click', () => { if (!started) randomFill(); });
 
     function triggerFirework() {
       const fw = document.querySelector('.firework');
@@ -261,5 +257,4 @@ const MAX_NUMBER = 66;
       }, 3000);
     }
 
-    applyJokerState();
     validateAll();
