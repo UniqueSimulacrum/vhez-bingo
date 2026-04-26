@@ -298,3 +298,23 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
       }
 }
 
+.easteregg {
+  position: fixed;
+  left: 50%;
+  bottom: -300px; /* start off-screen */
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: bottom 4s ease-out, opacity 2s ease-in;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.easteregg.active {
+  bottom: 40px; /* final visible position */
+  opacity: 1;
+}
+
+.dance-gif {
+  max-width: 300px;
+  height: auto;
+}
