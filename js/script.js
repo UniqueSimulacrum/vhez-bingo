@@ -13,6 +13,8 @@ const MAX_NUMBER = 66;
     const title = document.getElementById('title');
 
     const MID = Math.floor((SIZE*SIZE)/2);
+    const EASTER_PATTERN = [0, 4, 5, 9, 11, 13, 16, 18, 22];
+    let easterEggTriggered = false;
     let started = false;
 
     // Keep this outside checkBingo() so it persists between calls
@@ -134,6 +136,8 @@ const MAX_NUMBER = 66;
 
     function resetGame(keepNumbers = false) {
       started = false;
+      easterEggTriggered = false;
+      resetEasterEgg();
 
       cells.forEach(c => {
         if (!keepNumbers) c.input.value = '';
@@ -160,6 +164,7 @@ const MAX_NUMBER = 66;
       if (!cell) return;
       cell.classList.toggle('marked');
       checkBingo();
+      checkEasterEgg();
     }
 
     function checkBingo() {
@@ -255,6 +260,54 @@ const MAX_NUMBER = 66;
         toast.classList.remove("show");
         setTimeout(() => toast.remove(), 500);
       }, 3000);
+    }
+
+    function checkEasterEgg() {
+      if (easterEggTriggered) return;
+
+      const isExactMatch = cells.every((c, idx) => {
+        const isMarked = c.wrapper.classList.contains('marked');
+        const shouldBeMarked = EASTER_PATTERN.includes(idx);
+        return isMarked === shouldBeMarked;
+      });
+
+      if (isExactMatch) {
+        triggerDancyDance();
+        easterEggTriggered = true;
+      }
+    }
+
+    function triggerDancyDance() {
+      statusEl.textContent = "🎵 You feel a strange presence...";
+      setTimeout(() => {
+        const egg = document.getElementById("easteregg");
+        const audio = document.getElementById("secret-audio");
+
+        if (!egg || !audio) return;
+
+        // show animation
+        egg.classList.add("active");
+
+        // play audio (important: must be triggered by user interaction)
+        audio.volume = 0.7;
+        audio.play().catch(err => {
+          console.log("Audio playback blocked:", err);
+        });
+      }, 1000);
+    }
+
+    function resetEasterEgg() {
+      const egg = document.getElementById("easteregg");
+      const audio = document.getElementById("secret-audio");
+
+      if (!egg || !audio) return;
+
+      // remove visual state
+      egg.classList.remove("active");
+
+      // stop audio immediately
+      audio.pause();
+      audio.currentTime = 0;
     }
 
     validateAll();
