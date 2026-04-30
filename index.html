@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="css/colors.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/slider.css">
+  <link rel="stylesheet" href="css/fireworks.css">
+  <link rel="stylesheet" href="fontawesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="fontawesome/css/brands.min.css">
+  <link rel="stylesheet" href="fontawesome/css/solid.min.css">
+  <link rel="stylesheet" href="fontawesome/css/regular.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Saira+Extra+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -28,16 +34,25 @@
       <div id="grid" class="grid" aria-label="5x5 Bingo Feld"></div>
       <div class="controls">
         <div class="buttons">
-          <label class="toggle" title="Verhindert ein versehendliches Zurücksetzen">
-            <span>Lock</span>
+          <button id="copyBtn" class="icon-btn" type="button" disabled title="Kopiere Spielfeld">
+             <i class="fa-regular fa-copy"></i>
+          </button>
+          <button id="startBtn" class="icon-btn" type="button" disabled title="Start">
+            <i class="fa-solid fa-play play-icon"></i>
+            <i class="fa-solid fa-rotate-right restart-icon"></i>
+          </button>
+          <button id="fillBtn" class="icon-btn" type="button" title="Zufällig befüllen">
+            <i class="fa-solid fa-random"></i>
+          </button>
+          <label class="toggle" id="lock">
             <div class="switch">
-              <input id="lockToggle" type="checkbox" aria-label="Sperre aktivieren" />
-              <span class="slider"></span>
+              <input id="lockToggle" type="checkbox" disabled title="Sperre aktivieren">
+              <span class="slider">
+                <i class="fa-solid fa-lock lock-icon"></i>
+                <i class="fa-solid fa-lock-open unlock-icon"></i>
+              </span>
             </div>
           </label>
-          <button id="copyBtn">Copy Board</button>
-          <button id="fillBtn" type="button">Zufällig füllen</button>
-          <button id="startBtn" type="button" disabled>Start</button>
         </div>
         <div id="status" class="hint"></div>
       </div>
@@ -45,6 +60,7 @@
   </div>
   <div class="firework"></div>
   <div id="toast"></div>
+</body>
   <div id="easteregg" class="easteregg">
     <img src="img/dance.gif" alt="dance" class="dance-gif" />
     <audio id="secret-audio" src="img/secret.mp3"></audio>
@@ -53,5 +69,4 @@
   <script src="js/copyToclipboard.js"></script>
   <script src="js/script.js"></script>
   <script src="js/modal.js"></script>
-</body>
 </html>
