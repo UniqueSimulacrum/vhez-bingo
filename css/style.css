@@ -238,3 +238,28 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
       justify-content: center;
       align-items: center;
 }
+
+#startBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* default = start */
+#startBtn .play-icon {
+  display: inline-block;
+}
+
+#startBtn .restart-icon {
+  display: none;
+}
+
+/* restart state */
+#startBtn.restart-mode .play-icon {
+  display: none;
+}
+
+#startBtn.restart-mode .restart-icon {
+  display: inline-block;
+}
