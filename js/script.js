@@ -9,12 +9,15 @@ const MAX_NUMBER = 66;
     const lockToggle = document.getElementById('lockToggle');
     const fillBtn = document.getElementById('fillBtn');
     const startBtn = document.getElementById('startBtn');
+    const copyBtn = document.getElementById('copyBtn');
     const statusEl = document.getElementById('status');
     const title = document.getElementById('title');
 
     const MID = Math.floor((SIZE*SIZE)/2);
     const EASTER_PATTERN = [0, 4, 5, 9, 11, 13, 16, 18, 22];
     let easterEggTriggered = false;
+    const egg = document.getElementById("easteregg");
+    const audio = document.getElementById("secret-audio");
     let started = false;
 
     // Keep this outside checkBingo() so it persists between calls
@@ -123,13 +126,18 @@ const MAX_NUMBER = 66;
       lockToggle.checked = true;
       lockToggle.disabled = false;
 
+      fillBtn.disabled = true;
+      copyBtn.disabled = false;
+
       started = true;
       for (let i = 0; i < cells.length; i++) {
         cells[i].input.readOnly = true;
       }
       statusEl.textContent = 'Spiel läuft: Klicke Felder zum Markieren.';
-      startBtn.textContent = 'Neustart';
+
+      startBtn.classList.add('restart-mode');
       startBtn.disabled = false;
+      
       gridEl.addEventListener('click', onCellClick);
       document.body.classList.add("started");
     }
@@ -147,11 +155,14 @@ const MAX_NUMBER = 66;
 
       rewardedBingos.clear();
 
-      lockToggle.checked = false;   // reset to locked
-      lockToggle.disabled = false;
+      lockToggle.checked = false;
+      lockToggle.disabled = true;
 
-      startBtn.textContent = 'Start';
+      startBtn.classList.remove('restart-mode');
       startBtn.disabled = true;
+
+      fillBtn.disabled = false;
+      copyBtn.disabled = true;
 
       statusEl.textContent = '';
       statusEl.classList.remove('bingo-message','bingo-animate');
@@ -280,9 +291,6 @@ const MAX_NUMBER = 66;
     function triggerDancyDance() {
       statusEl.textContent = "🎵 You feel a strange presence...";
       setTimeout(() => {
-        const egg = document.getElementById("easteregg");
-        const audio = document.getElementById("secret-audio");
-
         if (!egg || !audio) return;
 
         // show animation
@@ -293,7 +301,7 @@ const MAX_NUMBER = 66;
         audio.play().catch(err => {
           console.log("Audio playback blocked:", err);
         });
-      }, 1000);
+      }, 1500);
     }
 
     function resetEasterEgg() {
@@ -309,5 +317,7 @@ const MAX_NUMBER = 66;
       audio.pause();
       audio.currentTime = 0;
     }
+
+    egg.addEventListener("click", () => resetEasterEgg());
 
     validateAll();
