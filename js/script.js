@@ -14,8 +14,10 @@ const MAX_NUMBER = 67;
     const title = document.getElementById('title');
 
     const MID = Math.floor((SIZE*SIZE)/2);
-    const EASTER_PATTERN = [0, 4, 5, 9, 11, 13, 16, 18, 22];
-    let easterEggTriggered = false;
+    const EASTER_1_PATTERN = [0, 4, 5, 9, 11, 13, 16, 18, 22];
+    const EASTER_2_PATTERN = [0, 2, 4, 5, 7, 9, 10, 12, 14, 15, 17, 19, 20, 22, 24];
+    let easterEgg1Triggered = false;
+    let easterEgg2Triggered = false;
     const egg = document.getElementById("easteregg");
     const audio = document.getElementById("secret-audio");
     let started = false;
@@ -144,7 +146,8 @@ const MAX_NUMBER = 67;
 
     function resetGame(keepNumbers = false) {
       started = false;
-      easterEggTriggered = false;
+      easterEgg1Triggered = false;
+      easterEgg2Triggered = false;
       resetEasterEgg();
 
       cells.forEach(c => {
@@ -175,7 +178,7 @@ const MAX_NUMBER = 67;
       if (!cell) return;
       cell.classList.toggle('marked');
       checkBingo();
-      checkEasterEgg();
+      checkEasterEggs();
     }
 
     function checkBingo() {
@@ -274,18 +277,26 @@ const MAX_NUMBER = 67;
     }
 
     function checkEasterEgg() {
-      if (easterEggTriggered) return;
+      if (!easterEgg1Triggered) {
+        if(checkEasterEgg(EASTER_1_PATTERN)) {
+          triggerDancyDance();
+          easterEgg1Triggered = true;
+        }
+      }
+      if (!easterEgg2Triggered) {
+        if(checkEasterEgg(EASTER_2_PATTERN)) {
+          triggerAchievement();
+          easterEgg2Triggered = true;
+        }
+      }
+    }
 
-      const isExactMatch = cells.every((c, idx) => {
+    function checkEasterEgg(pattern) {
+      return cells.every((c, idx) => {
         const isMarked = c.wrapper.classList.contains('marked');
-        const shouldBeMarked = EASTER_PATTERN.includes(idx);
+        const shouldBeMarked = pattern.includes(idx);
         return isMarked === shouldBeMarked;
       });
-
-      if (isExactMatch) {
-        triggerDancyDance();
-        easterEggTriggered = true;
-      }
     }
 
     function triggerDancyDance() {
@@ -302,6 +313,13 @@ const MAX_NUMBER = 67;
           console.log("Audio playback blocked:", err);
         });
       }, 1500);
+    }
+
+    function triggerAchievement() {
+      const popup = document.querySelector('.achievement-popup');
+      popup.classList.remove('show');
+      void popup.offsetWidth;
+      popup.classList.add('show');
     }
 
     function resetEasterEgg() {
