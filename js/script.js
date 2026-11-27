@@ -15,26 +15,35 @@ const MAX_NUMBER = 67;
 
     const MID = Math.floor((SIZE*SIZE)/2);
     const EASTER_1_PATTERN = [0, 4, 5, 9, 11, 13, 16, 18, 22];
-    const EASTER_2_PATTERN = [0, 2, 4, 5, 7, 9, 10, 12, 14, 15, 17, 19, 20, 22, 24];
-    const EASTER_3_PATTERN = [0, 1, 2, 4, 7, 12, 20];
     let easterEgg1Triggered = false;
-    let easterEgg2Triggered = false;
-    let easterEgg3Triggered = false;
+    let achivementsTriggered = [];
     const egg = document.getElementById("easteregg");
     const audio = document.getElementById("secret-audio");
     const audio_achievement = document.getElementById("secret-achievement-audio");
 
     const ACHIEVEMENTS = {
         sausages: {
+            name: "sausage",
+            patter: [0, 2, 4, 5, 7, 9, 10, 12, 14, 15, 17, 19, 20, 22, 24],
             image: "img/achievement-sausages.png",
             title: "Würstchen",
             description: "Drei stehende Würstchen! NICE!"
         },
 
         fibonacci: {
+            name: "fibnacci",
+            patter: [0, 1, 2, 4, 7, 12, 20],
             image: "img/achievement-fibonacci.png",
             title: "Der goldene Schnitt",
             description: "1, 2, 3, 5, 8, 13, 21."
+        },
+
+        prim: {
+            name: "primnumbers",
+            patter: [1, 2, 4, 6, 10, 12, 16, 18, 22],
+            image: "img/achievement-prim.png",
+            title: "Unteilbar",
+            description: "NERD!"
         }
     };
     
@@ -165,8 +174,7 @@ const MAX_NUMBER = 67;
     function resetGame(keepNumbers = false) {
       started = false;
       easterEgg1Triggered = false;
-      easterEgg2Triggered = false;
-      easterEgg3Triggered = false;
+      achivementsTriggered = [];
       resetEasterEgg();
 
       cells.forEach(c => {
@@ -302,18 +310,14 @@ const MAX_NUMBER = 67;
           easterEgg1Triggered = true;
         }
       }
-      if (!easterEgg2Triggered) {
-        if(matchEastereggPattern(EASTER_2_PATTERN)) {
-          triggerAchievement(ACHIEVEMENTS.sausages);
-          easterEgg2Triggered = true;
-        }
-      }
-      if (!easterEgg3Triggered) {
-        if(matchEastereggPattern(EASTER_3_PATTERN)) {
-          triggerAchievement(ACHIEVEMENTS.fibonacci);
-          easterEgg3Triggered = true;
-        }
-      }
+      ACHIEVEMENTS.forEach(achievement => {
+        if (!achivementsTriggered.includes(achievement.name)) {
+          if (matchEastereggPattern(achievement.pattern)) {
+            triggerAchievement(achievement);
+            achivementsTriggered.push(achievement.name);
+          }
+        }    
+      });
     }
 
     function matchEastereggPattern(pattern) {
