@@ -25,7 +25,7 @@ const MAX_NUMBER = 67;
         sausages: {
             name: "sausage",
             patter: [0, 2, 4, 5, 7, 9, 10, 12, 14, 15, 17, 19, 20, 22, 24],
-            image: "images/achievement-sausages.png",
+            image: "img/achievement-sausages.png",
             title: "Würstchen",
             description: "Drei stehende Würstchen! NICE!"
         },
@@ -33,7 +33,7 @@ const MAX_NUMBER = 67;
         fibonacci: {
             name: "fibnacci",
             patter: [0, 1, 2, 4, 7, 12, 20],
-            image: "images/achievement-fibonacci.png",
+            image: "img/achievement-fibonacci.png",
             title: "Der goldene Schnitt",
             description: "1, 2, 3, 5, 8, 13, 21."
         },
@@ -41,7 +41,7 @@ const MAX_NUMBER = 67;
         prim: {
             name: "primnumbers",
             patter: [1, 2, 4, 6, 10, 12, 16, 18, 22],
-            image: "images/achievement-prim.png",
+            image: "img/achievement-prim.png",
             title: "Unteilbar",
             description: "NERD!"
         }
