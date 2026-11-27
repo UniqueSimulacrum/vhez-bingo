@@ -79,6 +79,6 @@
     }
 }
 
-.achievement-popup {
-    animation: achievement-slide-in 0.4s ease-out;
+.achievement-popup.show {
+    animation: achievement-slide-in 0.4s ease-out forwards;
 }
