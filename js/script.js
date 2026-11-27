@@ -24,7 +24,7 @@ const MAX_NUMBER = 67;
     const ACHIEVEMENTS = {
         sausages: {
             name: "sausage",
-            patter: [0, 2, 4, 5, 7, 9, 10, 12, 14, 15, 17, 19, 20, 22, 24],
+            pattern: [0, 2, 4, 5, 7, 9, 10, 12, 14, 15, 17, 19, 20, 22, 24],
             image: "img/achievement-sausages.png",
             title: "Würstchen",
             description: "Drei stehende Würstchen! NICE!"
@@ -32,7 +32,7 @@ const MAX_NUMBER = 67;
 
         fibonacci: {
             name: "fibnacci",
-            patter: [0, 1, 2, 4, 7, 12, 20],
+            pattern: [0, 1, 2, 4, 7, 12, 20],
             image: "img/achievement-fibonacci.png",
             title: "Der goldene Schnitt",
             description: "1, 2, 3, 5, 8, 13, 21."
@@ -40,7 +40,7 @@ const MAX_NUMBER = 67;
 
         prim: {
             name: "primnumbers",
-            patter: [1, 2, 4, 6, 10, 12, 16, 18, 22],
+            pattern: [1, 2, 4, 6, 10, 12, 16, 18, 22],
             image: "img/achievement-prim.png",
             title: "Unteilbar",
             description: "NERD!"
@@ -310,7 +310,7 @@ const MAX_NUMBER = 67;
           easterEgg1Triggered = true;
         }
       }
-      ACHIEVEMENTS.forEach(achievement => {
+      Object.values(ACHIEVEMENTS).forEach(achievement => {
         if (!achivementsTriggered.includes(achievement.name)) {
           if (matchEastereggPattern(achievement.pattern)) {
             triggerAchievement(achievement);
