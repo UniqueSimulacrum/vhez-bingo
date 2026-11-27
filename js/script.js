@@ -318,12 +318,10 @@ const MAX_NUMBER = 67;
 
     function triggerAchievement() {
       const popup = document.querySelector('.achievement-popup');
-      popup.classList.remove('show');
-      void popup.offsetWidth;
       popup.classList.add('show');
       setTimeout(() => {
         popup.classList.remove('show');
-      }, 5000);
+      }, 3000);
       setTimeout(() => {
         if (!audio_achievement) return;
 
@@ -332,7 +330,7 @@ const MAX_NUMBER = 67;
         audio_achievement.play().catch(err => {
           console.log("Audio playback blocked:", err);
         });
-      }, 1500);
+      }, 500);
     }
 
     function resetEasterEgg() {
