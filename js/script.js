@@ -276,22 +276,22 @@ const MAX_NUMBER = 67;
       }, 3000);
     }
 
-    function checkEasterEgg() {
+    function checkEasterEggs() {
       if (!easterEgg1Triggered) {
-        if(checkEasterEgg(EASTER_1_PATTERN)) {
+        if(matchEastereggPattern(EASTER_1_PATTERN)) {
           triggerDancyDance();
           easterEgg1Triggered = true;
         }
       }
       if (!easterEgg2Triggered) {
-        if(checkEasterEgg(EASTER_2_PATTERN)) {
+        if(matchEastereggPattern(EASTER_2_PATTERN)) {
           triggerAchievement();
           easterEgg2Triggered = true;
         }
       }
     }
 
-    function checkEasterEgg(pattern) {
+    function matchEastereggPattern(pattern) {
       return cells.every((c, idx) => {
         const isMarked = c.wrapper.classList.contains('marked');
         const shouldBeMarked = pattern.includes(idx);
