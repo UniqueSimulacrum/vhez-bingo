@@ -26,13 +26,13 @@ const MAX_NUMBER = 67;
 
     const ACHIEVEMENTS = {
         sausages: {
-            image: "images/achievement-sausages.png",
+            image: "img/achievement-sausages.png",
             title: "Würstchen",
             description: "Drei stehende Würstchen! NICE!"
         },
 
         fibonacci: {
-            image: "images/achievement-fibonaci.png",
+            image: "img/achievement-fibonaci.png",
             title: "Der goldene Schnitt",
             description: "1, 2, 3, 5, 8, 13, 21."
         }
