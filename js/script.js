@@ -1,9 +1,9 @@
 
-const MAX_NUMBER = 66;
+const MAX_NUMBER = 67;
 
     const SIZE = 5;
 
-    const TITLE = "BULLSHIT BINGO"
+    const TITLE = "HORROR BINGO"
     
     const gridEl = document.getElementById('grid');
     const lockToggle = document.getElementById('lockToggle');
