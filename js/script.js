@@ -32,7 +32,7 @@ const MAX_NUMBER = 67;
         },
 
         fibonacci: {
-            image: "img/achievement-fibonaci.png",
+            image: "img/achievement-fibonacci.png",
             title: "Der goldene Schnitt",
             description: "1, 2, 3, 5, 8, 13, 21."
         }
