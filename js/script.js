@@ -321,7 +321,7 @@ const MAX_NUMBER = 67;
       popup.classList.add('show');
       setTimeout(() => {
         popup.classList.remove('show');
-      }, 3000);
+      }, 6000);
       setTimeout(() => {
         if (!audio_achievement) return;
 
