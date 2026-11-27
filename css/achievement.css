@@ -1,5 +1,6 @@
 
 .achievement-popup {
+    display: none;
     position: fixed;
     bottom: 24px;
     right: 24px;
@@ -80,5 +81,6 @@
 }
 
 .achievement-popup.show {
+    display: flex;
     animation: achievement-slide-in 0.4s ease-out forwards;
 }
