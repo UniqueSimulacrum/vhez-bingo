@@ -20,6 +20,7 @@ const MAX_NUMBER = 67;
     let easterEgg2Triggered = false;
     const egg = document.getElementById("easteregg");
     const audio = document.getElementById("secret-audio");
+    const audio_achievement = document.getElementById("secret-achievement-audio");
     let started = false;
 
     // Keep this outside checkBingo() so it persists between calls
@@ -320,6 +321,18 @@ const MAX_NUMBER = 67;
       popup.classList.remove('show');
       void popup.offsetWidth;
       popup.classList.add('show');
+      setTimeout(() => {
+        popup.classList.remove('show');
+      }, 5000);
+      setTimeout(() => {
+        if (!audio_achievement) return;
+
+        // play audio (important: must be triggered by user interaction)
+        audio_achievement.volume = 0.7;
+        audio_achievement.play().catch(err => {
+          console.log("Audio playback blocked:", err);
+        });
+      }, 1500);
     }
 
     function resetEasterEgg() {
