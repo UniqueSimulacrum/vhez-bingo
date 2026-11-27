@@ -90,6 +90,8 @@ const MAX_NUMBER = 67;
       }
     });
 
+    gridEl.addEventListener('click', onCellClick);
+
     function randomFill() {
       const pool = Array.from({length: MAX_NUMBER}, (_, i) => i+1);
       shuffle(pool);
@@ -167,7 +169,6 @@ const MAX_NUMBER = 67;
       startBtn.classList.add('restart-mode');
       startBtn.disabled = false;
       
-      gridEl.addEventListener('click', onCellClick);
       document.body.classList.add("started");
     }
 
