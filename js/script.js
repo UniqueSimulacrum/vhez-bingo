@@ -330,7 +330,7 @@ const MAX_NUMBER = 67;
         audio_achievement.play().catch(err => {
           console.log("Audio playback blocked:", err);
         });
-      }, 500);
+      }, 300);
     }
 
     function resetEasterEgg() {
