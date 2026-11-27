@@ -1,8 +1,9 @@
 
 .achievement-popup {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
 
     width: 330px;
     min-height: 90px;
