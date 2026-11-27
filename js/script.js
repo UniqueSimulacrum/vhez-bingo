@@ -16,11 +16,28 @@ const MAX_NUMBER = 67;
     const MID = Math.floor((SIZE*SIZE)/2);
     const EASTER_1_PATTERN = [0, 4, 5, 9, 11, 13, 16, 18, 22];
     const EASTER_2_PATTERN = [0, 2, 4, 5, 7, 9, 10, 12, 14, 15, 17, 19, 20, 22, 24];
+    const EASTER_3_PATTERN = [0, 1, 2, 4, 7, 12, 20];
     let easterEgg1Triggered = false;
     let easterEgg2Triggered = false;
+    let easterEgg3Triggered = false;
     const egg = document.getElementById("easteregg");
     const audio = document.getElementById("secret-audio");
     const audio_achievement = document.getElementById("secret-achievement-audio");
+
+    const ACHIEVEMENTS = {
+        sausages: {
+            image: "images/achievement-sausages.png",
+            title: "Würstchen",
+            description: "Drei stehende Würstchen! NICE!"
+        },
+
+        fibonacci: {
+            image: "images/achievement-fibonaci.png",
+            title: "Der goldene Schnitt",
+            description: "1, 2, 3, 5, 8, 13, 21."
+        }
+    };
+    
     let started = false;
 
     // Keep this outside checkBingo() so it persists between calls
@@ -149,6 +166,7 @@ const MAX_NUMBER = 67;
       started = false;
       easterEgg1Triggered = false;
       easterEgg2Triggered = false;
+      easterEgg3Triggered = false;
       resetEasterEgg();
 
       cells.forEach(c => {
@@ -286,8 +304,14 @@ const MAX_NUMBER = 67;
       }
       if (!easterEgg2Triggered) {
         if(matchEastereggPattern(EASTER_2_PATTERN)) {
-          triggerAchievement();
+          triggerAchievement(ACHIEVEMENTS.sausages);
           easterEgg2Triggered = true;
+        }
+      }
+      if (!easterEgg3Triggered) {
+        if(matchEastereggPattern(EASTER_3_PATTERN)) {
+          triggerAchievement(ACHIEVEMENTS.fibonacci);
+          easterEgg3Triggered = true;
         }
       }
     }
@@ -316,21 +340,33 @@ const MAX_NUMBER = 67;
       }, 1500);
     }
 
-    function triggerAchievement() {
-      const popup = document.querySelector('.achievement-popup');
-      popup.classList.add('show');
-      setTimeout(() => {
+    function triggerAchievement(achievement) {
+        const popup = document.querySelector('.achievement-popup');
+    
+        if (!popup) return;
+    
+        // Set achievement content
+        document.getElementById('achievement-image').src = achievement.image;
+        document.getElementById('achievement-title').textContent = achievement.title;
+        document.getElementById('achievement-description').textContent = achievement.description;
+    
+        // Restart animation
         popup.classList.remove('show');
-      }, 6000);
-      setTimeout(() => {
-        if (!audio_achievement) return;
+        void popup.offsetWidth;
+        popup.classList.add('show');
 
-        // play audio (important: must be triggered by user interaction)
-        audio_achievement.volume = 0.7;
-        audio_achievement.play().catch(err => {
-          console.log("Audio playback blocked:", err);
-        });
-      }, 300);
+        setTimeout(() => {
+        popup.classList.remove('show');
+          }, 6000);
+        setTimeout(() => {
+          if (!audio_achievement) return;
+    
+          // play audio (important: must be triggered by user interaction)
+          audio_achievement.volume = 0.7;
+          audio_achievement.play().catch(err => {
+            console.log("Audio playback blocked:", err);
+          });
+        }, 300);
     }
 
     function resetEasterEgg() {
