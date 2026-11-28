@@ -44,6 +44,22 @@ const MAX_NUMBER = 67;
             image: "img/achievement-prim.png",
             title: "Unteilbar",
             description: "NERD!"
+        },
+
+        boo: {
+            name: "boo",
+            pattern: [1, 2, 3, 5, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 24],
+            image: "img/achievement-boo.png",
+            title: "Boo!",
+            description: "Du wurdest vollgespukt!"
+        },
+
+        moonstruck: {
+            name: "moonstruck",
+            pattern: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 21, 22, 23],
+            image: "img/achievement-moonstruck.png",
+            title: "Moonstruck",
+            description: "Das Biest erwacht in dir!"
         }
     };
     
