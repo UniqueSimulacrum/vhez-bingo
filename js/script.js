@@ -60,6 +60,14 @@ const MAX_NUMBER = 67;
             image: "img/achievement-moonstruck.png",
             title: "Moonstruck",
             description: "Das Biest erwacht in dir!"
+        },
+
+        organhandel: {
+            name: "organhandel",
+            pattern: [1, 3, 5, 7, 9, 10, 14, 16, 18, 22],
+            image: "img/achievement-organhandel.png",
+            title: "Organhandel",
+            description: "So frisch, es schlägt noch!"
         }
     };
     
