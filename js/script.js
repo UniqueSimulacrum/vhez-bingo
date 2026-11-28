@@ -68,6 +68,14 @@ const MAX_NUMBER = 67;
             image: "img/achievement-organhandel.jpg",
             title: "Organhandel",
             description: "So frisch, es schlägt noch!"
+        },
+
+        kittyFace: {
+            name: "kittyFace",
+            pattern: [6, 8, 15, 17, 19, 21, 23],
+            image: "img/achievement-kittyFace.jpg",
+            title: ":3",
+            description: "äh... miau?"
         }
     };
     
