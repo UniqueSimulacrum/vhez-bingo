@@ -56,7 +56,7 @@ const MAX_NUMBER = 67;
 
         moonstruck: {
             name: "moonstruck",
-            pattern: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 21, 22, 23],
+            pattern: [1, 3, 5, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23],
             image: "img/achievement-moonstruck.jpg",
             title: "Moonstruck",
             description: "Das Biest erwacht in dir!"
